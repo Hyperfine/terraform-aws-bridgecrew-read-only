@@ -20,6 +20,7 @@ output "role" {
 
 output "message" {
   value = templatefile("${path.module}/message.json.tpl", { request_type = local.request_type, bridgecrew_sns_topic = local.bridgecrew_sns_topic, customer_name = local.customer_name, account_id = local.account_id, external_id = local.external_id, role_arn = local.role_arn, region = local.region, api_token = local.api_token })
+  sensitive = true
 }
 
 output "role_name" {
