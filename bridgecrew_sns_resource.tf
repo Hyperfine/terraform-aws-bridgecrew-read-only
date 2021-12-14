@@ -6,7 +6,7 @@ locals {
   external_id          = random_uuid.external_id.result
   role_arn             = aws_iam_role.bridgecrew_account_role.arn
   region               = data.aws_region.region.id
-  api_token            = var.api_token
+  api_token            = data.aws_secretsmanager_secret_version.api_token.secret_string
 
   message_template     = templatefile("${path.module}/message.json.tpl",
     {
@@ -19,6 +19,14 @@ locals {
       region = local.region,
       api_token = local.api_token,
     })
+}
+
+data "aws_secretsmanager_secret" "api_token" {
+  name     = var.api_token_name
+}
+
+data "aws_secretsmanager_secret_version" "api_token" {
+  secret_id = data.aws_secretsmanager_secret.api_token.arn
 }
 
 resource "null_resource" "create_bridgecrew" {
