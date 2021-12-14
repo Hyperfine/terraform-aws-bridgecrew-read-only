@@ -14,9 +14,10 @@ variable "aws_profile" {
   description = "The profile that was used to deploy this module. If the default profile / default credentials are used, seet this value to null."
 }
 
-variable "api_token" {
+variable "api_token_name" {
   type        = string
   description = "This is your Bridgecrew platform Api token Set as and Environment variable TF_VAR_api_token"
+  default     = "/bridgecrew/api_token"
 }
 
 variable "common_tags" {
